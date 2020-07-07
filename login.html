@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ubimed | Bienvenido</title>
+    <!--bootstrap and font-->
+    <%- include('../includes/cssdefault.ejs') %>
+        <!--css-->
+        <link rel="stylesheet" href="./css/login.css">
+</head>
+
+<body>
+    <div id="contInfo" class="login">
+        <div class="main">
+            <div class="col-md-8 col-sm-10">
+                <div class="row shadow rounded p-3 rounded">
+                    <% if(CreatePacient.length > 0){ %>
+                        <div class="col-md-12 alert alert-success">
+                            <button type="button" class="close ml-2" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            <%=CreatePacient%>
+                        </div>
+                        <% } %>
+                            <% if(noPass.length > 0){ %>
+                                <div class="col-md-12 alert alert-danger">
+                                    <button type="button" class="close ml-2" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                    <%=noPass%>
+                                </div>
+                                <% } %>
+                                    <% if(noVerify.length > 0){ %>
+                                        <div class="col-md-12 alert alert-warning">
+                                            <button type="button" class="close ml-2" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                            <%=noVerify%>
+                                        </div>
+                                        <% } %>
+                                            <% if(noUser.length > 0){ %>
+                                                <div class="col-md-12 alert alert-danger">
+                                                    <button type="button" class="close ml-2" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                                    <%=noUser%>
+                                                </div>
+                                                <% } %>
+                                                    <% if(verify.length > 0){ %>
+                                                        <div class="col-md-12 alert alert-success">
+                                                            <button type="button" class="close ml-2" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                                            <%=verify%>
+                                                        </div>
+                                                        <% } %>
+                                                            <div class="col-md-6 col-sm-8" style="background: white;">
+                                                                <br>
+                                                                <br>
+                                                                <div class="mb-2 mt-2 col-md-6 col-sm-6 mx-auto d-flex justify-content-center align-items-end">
+                                                                    <img src="./img/logo.png" alt="logo ubimed" class="mt-5" style="width: 60%;">
+                                                                </div>
+                                                                <div class="col-md-11 my-2 mx-auto col-sm-10">
+                                                                    <form action="/auth" method="POST" class="w-100 mx-auto">
+                                                                        <div class="form-group">
+                                                                            <input type="email" name="email" class="form-control bg-light text-center" aria-describedby="emailHelp" placeholder="Email" required>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <input type="password" name="pass" class="form-control bg-light text-center" placeholder="Contraseña" required>
+                                                                        </div>
+                                                                        <button type="submit" class="btn btn-main btn-block">Iniciar Sesión</button>
+                                                                    </form>
+                                                                    <hr>
+                                                                    <div class="w-100 d-flex align-items-center justify-content-center flex-column">
+                                                                        <form id="changePass" action="/change-pass" class="form-inline w-100 d-none">
+                                                                            <small id="emailRecuperateLenged3" class="text-success m-0 d-none">Revisa tu correo, se envió un pin de verificación</small>
+                                                                            <small id="emailRecuperateLenged4" class="text-danger m-0 d-none">Pin incorrecto</small>
+                                                                            <input id="pinInp" type="tel" name="pinVerify" class="form-control w-100 mb-2" style="font-size: .8em;" placeholder="Ingresa el pin">
+                                                                            <input id="changeEma" type="hidden" name="email" value="">
+                                                                            <input id="newPass" type="password" name="password1" class="form-control w-100 mb-2" style="font-size: .8em;" placeholder="Ingresa la nueva contraseña">
+                                                                            <input id="newPass2" type="password" name="password2" class="form-control w-100 mb-2" style="font-size: .8em;" placeholder="Confirma tu contraseña">
+                                                                            <button id="ressPass" class="btn btn-main" style="font-size: .8em;">Restablecer</button>
+                                                                        </form>
+                                                                        <form id="recuperate" class="form-inline w-100 d-none">
+                                                                            <small id="emailRecuperateLenged" class="text-danger m-0 d-none">Correo no valido</small>
+                                                                            <small id="emailRecuperateLenged2" class="text-danger m-0 d-none">Correo no existe en nuestros servicios</small>
+                                                                            <input id="emailArecupar" type="email" class="form-control w-100" name="email" id="emailRecuperate" placeholder="Ingrese su email">
+                                                                            <button id="btnRecuperar" class="btn btn-block btn-main mt-2">Recuperar Contraseña</button>
+                                                                        </form>
+                                                                        <button id="btnOlvidasteTuContraseña" class="btn text-primary" onclick="mostrarRecuperacion();">Olvidaste tu contraseña?</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6 col-sm-8">
+                                                                <div class="col-md-11 my-2 col-sm-10">
+                                                                    <br>
+                                                                    <br>
+                                                                    <form class="w-100 ">
+                                                                        <h3 style="color: #65c4af">Aun no tienes cuenta? <small>Registrate</small> </h3>
+                                                                        <div class="form-group">
+                                                                            <label for="email" class="text-muted">Usuario:</label>
+                                                                            <input id="emailCreate" type="email" class="form-control" aria-describedby="emailHelp" placeholder="Email" required>
+                                                                            <small id="emailValidate" class="text-danger m-0 d-none">Correo no valido</small>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label for="email" class="text-muted">Utiliza una contraseña segura:</label>
+                                                                            <input id="pass" type="password" class="form-control mb-3" placeholder="Contraseña" required>
+                                                                            <input id="confirmPass" type="password" class="form-control m-0" placeholder="Confirmar contraseña" required>
+                                                                            <small id="alertPass" class="text-danger m-0 d-none">Tus contraseñas no concuerdan</small>
+                                                                            <small id="successPass" class="text-success m-0 d-none">Tus contraseñas concuerdan</small>
+                                                                        </div>
+                                                                        <div class="form-group form-check">
+                                                                            <input id="acceptTC" type="checkbox" class="form-check-input" required>
+                                                                            <label class="form-check-label" for="exampleCheck1">Aceptas los <button class="btn p-0" style="color: rgb(70, 70, 248);" data-toggle="modal" data-target="#terms">Términos & Condiciones</button> </label>
+                                                                        </div>
+                                                                        <button id="createUserBtn" type="submit" class="btn btn-sec shadow-sm btn-block">Crear Cuenta</button>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                </div>
+            </div>
+        </div>
+        <div class="selectRol">
+            <div class="col-md-12 col-sm-8 mx-auto d-flex justify-content-center">
+                <div class="row col-sm-8 mx-auto d-flex justify-content-center">
+                    <h1 class=" w-100 text-center mb-5 text-muted">¿Quien Eres?</h1>
+                    <div id="selectPac" class="p-2 col-md-6 col-sm-8 border-right mb-2 d-flex justify-content-center align-items-center" style="border-radius: 20px;">
+                        <div class="row d-flex justify-content-center align-items-center">
+                            <div class="w-50 d-flex justify-content-center align-items-center">
+                                <i class="fas fa-hospital-user fa-3x" style="color: #3AB0F0; font-size: 7.4em;"></i>
+                            </div>
+                            <div class="w-50 d-flex justify-content-start align-items-center">
+                                <h3 class="w-50 text-muted">Soy Paciente</h3>
+                            </div>
+                        </div>
+                        <form id="formPaciente" action="/crear-paciente" method="POST" class="d-none">
+                            <input id="emailUser" type="hidden" name="email" value="">
+                            <input id="passUser" type="hidden" name="pass" value="">
+                        </form>
+                    </div>
+                    <div id="selectDoc" class="p-2 mx-auto col-md-6 col-sm-8 border-left mb-2 d-flex justify-content-center align-items-center" style="border-radius: 20px;">
+                        <div class="row">
+                            <div class="w-50 d-flex justify-content-center align-items-center">
+                                <i class="fas fa-user-md" style="font-size: 7em; color: #65c4af"></i>
+                            </div>
+                            <div class="w-50 d-flex justify-content-start align-items-center">
+                                <h3 class="w-100 text-muted">Soy profesional de la salud</h3>
+                            </div>
+                        </div>
+                        <form id="formDoctor" action="/crear-doctor" method="POST" class="d-none">
+                            <input id="emailDoc" type="hidden" name="email" value="">
+                            <input id="passDoc" type="hidden" name="pass" value="">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div id="terms" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="terms" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body text-justify">
+                <div class="p-3 text-justify">
+                    <h1>Términos y Condiciones</h1>
+                    <p>Esta plataforma es propiedad de Ubimed SAS, empresa constituida en Colombia. Al hacer uso de esta, usted manifiesta estar de acuerdo con los “términos y condiciones “.</p>
+                    <p>La plataforma Ubimed, es desarrollada para garantizar la comunicación entre los proveedores de servicios de salud y sus pacientes y/ó usuarios, a través de un servicio de videoconsulta, que integra la Historia Clínica de los pacientes, bajo los lineamientos de la resolución 1995 de 1999 y el manual de habilitación dado en la resolución 3100 del 2019 de la república de Colombia. </p>
+                    <p>Ubimed podrá actualizar y/o modificar sus textos, datos, información, imágenes e iconos sin previo aviso, razón por la cual sugerimos una revisión periódica de los “Términos y Condiciones” de la plataforma. </p>
+                    <p>Esta plataforma no pretende reemplazar la presencialidad de las consultas, y no será responsable por ningún daño directo, indirecto o consecuencial derivado del uso de su plataforma, ya que el único propósito de la plataforma es ser el proveedor de la herramienta tecnológica que asegure la comunicación entre los proveedores de servicios de salud y sus pacientes. </p>
+                    <p>Ubimed SAS, no opera, ni administra ninguna clínica, ni hospital, ni tiene relación contractual con cualquier otro proveedor de servicios de salud, por lo tanto, no ejerce ningún tipo de control, ni responsabilidad sobre los servicios que oferten los proveedores de servicios de salud inscritos o registrados en la plataforma., por tanto, los proveedores de servicios de salud inscritos en la plataforma no representan a Ubimed SAS. Cualquier reclamación derivada de las actividades desarrolladas haciendo uso de la plataforma como en la videoconsulta y el chatdoc, recaerán y solo podrán ser planteadas frente a los proveedores de servicios de salud inscritos y/ o registrados y no sobre Ubimed SAS. </p>
+                    <h3>Requerimientos de Edad</h3>
+                    <p>Para el registro en la plataforma de Ubimed como persona natural, y para todos los efectos legales dentro de la República de Colombia, es mayor de edad   quien ha cumplido 18 años, al aceptar los términos y condiciones lo manifiesta. </p>
+                    <p>
+                        El uso de la plataforma para realizar la videoconsulta de un menor de edad podrá ser tomada bajo el perfil, rol o cuenta del tutor legal o cuidador aceptado en la república de Colombia. 
+                    </p>
+                    <h3>Acerca de los proveedores de servicios de salud </h3>
+                    <p>
+                        Ubimed SAS, Considera como proveedores de servicios de salud a las Instituciones prestadoras de servicios de salud, Entidades administradoras de Riesgos Laborales, Entidades administradoras de planes de beneficios, profesionales de la salud independientes en todas las áreas, y demás organizaciones e instituciones registradas ante el REPS (Registro Especial de Prestadores de servicios) en la República de Colombia y también serán denominados por Ubimed SAS como “usuarios” de la plataforma.
+                    </p>
+                    <p>
+                        Al aceptar los términos y condiciones se compromete a actualizar la información solicitada por la plataforma y manifiesta que como profesional e institución, o entidad de la República de Colombia, se encuentra debidamente autorizado, registrado y calificado bajo las leyes y requerimiento administrativos locales con tarjeta profesional vigente para desempeñar las actividades a las cuales se registra en la plataforma. Acepta informar a Ubimed SAS, a través de la plataforma o del correo soporte@Ubimed.com.co si cualquiera de los datos ingresados en la plataforma cambia durante su permanencia como “usuario Activo” en la plataforma. Caso contrario será responsable, de cualquier multa, penalidad e indemnización por perjuicios que pueda ocasionar. 
+                    </p>
+                    <p>
+                        Cuando Ubimed SAS, considere pertinente, o en caso de incumplimiento de los términos y condiciones, o se identifique uso de falsedad o inexactitud de la información reportada por el Usuario, podrá desactivar su cuenta sin previo aviso de esta plataforma. 
+                    </p>
+                    <p>
+                        Al aceptar los términos y condiciones manifiestan contar con la infraestructura de conectividad para realizar las actividades de la plataforma, como son: contar con proveedor de internet que soporte la videollamada y suministro de energía eléctrica.
+                    </p>
+                    <h3>
+                        Acerca de los Pacientes y / o Usuarios
+                    </h3>
+                    <p>
+                        Los pacientes también denominados “usuarios” de la plataforma al aceptar los términos y condiciones, aceptan el registro de información veraz, confiable, oportuna y manifiestan contar con la infraestructura de conectividad para realizar las actividades de la plataforma, como son: contar con proveedor de internet que soporte la videollamada y suministro de energía eléctrica.
+                    </p>
+                    <p>
+                        Caso contrario será responsable, de cualquier multa, penalidad e indemnización por perjuicios que pueda ocasionar.La videoconsulta de un menor de edad podrá ser tomada bajo el perfil, rol o cuenta del tutor legal o cuidador bajo las leyes y normas dadas en la república de Colombia. Cuando Ubimed SAS, considere pertinente, o en caso de incumplimiento de los términos y condiciones, o se identifique uso de falsedad o inexactitud de la información reportada por el Usuario, podrá desactivar su cuenta sin previo aviso de esta plataforma. 
+                    </p>
+                    <h3>Otras consideraciones </h3>
+                    <p>
+                        Ubimed, garantizara la persistencia de los datos de todas las actividades realizadas en la plataforma derivadas de la videoconsulta y el chatdoc. El historial de las actividades desarrolladas podrá ser consultadas desde la cuenta del usuario y adicionalmente serán enviadas vía correo electrónico a los usuarios involucrados en la actividad. Serán los usuarios los responsables de la custodia de la Historia clínica. De requerirse por parte de los proveedores de servicios de salud que Ubimed SAS administre y custodie los datos se generará un acuerdo contractual adicional con los interesados. 
+                    </p>
+                    <h3>
+                        Reglas de conducta 
+                    </h3>
+                    <p>
+                        Algunos de los servicios de la plataforma de Ubimed, permite interactuar con otros usuarios, razón por la cual se deben seguir las siguientes reglas de conducta básicas, como son el respeto por los demás usuarios, respetar el derecho a la privacidad y a la propiedad intelectual,  no  dañar a otros ni así mismo, mediante acciones como estafar, engañar, difamar, acosar, intimidar, y en general  no hacer uso de la plataforma Ubimed para  actividades no relacionadas con la videoconsulta, entre los usuarios activos  de la plataforma. 
+                    </p>
+                    <h3>
+                        Pagos y responsabilidad: 
+                    </h3>
+                    <p>
+                        Al realizar el proceso de compra en los canales habilitados por   la plataforma, conoce y acepta que está contratando y pagando un servicio que será entregado por el prestador y / o proveedor de servicios de salud elegidos por el usuario de acuerdo con la confirmación de la compra. 
+                    </p>
+                    <h3>
+                        Confidencialidad 
+                    </h3>
+                    <p>Entendiendo las características propias del servicio de Internet y que la privacidad no puede ser asegurada en un cien por ciento y que no estamos exentos de ataques cibernéticos, Ubimed SAS implementa estándares y protocolos nacionales e internacionales como   HIPPA y hl7 que garantizan   seguridad, privacidad, integridad y protección la confidencialidad de la información.</p>
+                    <p>
+                        Ubimed implementa una tecnología de encriptación, que, hasta la fecha de elaboración de este documento, no ha sido vulnerada, evitando ataques de fuerza bruta. Los datos sensibles de los usuarios, así como passwords o contraseñas son almacenados para evitar cualquier posible robo de datos. En la capa de transporte de datos, toda información que se envía y se recibe por la plataforma, viaja de forma cifrada, con tecnología SSL y TLS, las cuales garantizan seguridad, privacidad, autenticidad, integridad y protección  de la confidencialidad de la información,  Sin embargo no podemos descartar  fallas  provenientes de las  malas prácticas de seguridad del usuario al navegar  en internet y/ o usar diferentes  plataformas tecnológicas en sus dispositivos electrónicos sin las debidas precauciones, pudiendo   ser víctima de ataques de phishing o implantación de cualquier tipo de malware que pudiese  robar su información y suplantar  su identidad. 
+                    </p>
+                    <p>
+                        Ubimed SAS, no asume ninguna responsabilidad por falla, interrupción, retrasos o demoras y ausencia de datos transmitidos en conexión con este sitio, causado por una mala señal de internet, ausencia de servicio eléctrico   y demás factores físicos y fisiológicos ajenos al desempeño de Ubimed.
+                    </p>
+                    <h3>Acerca de las videoconsulta</h3>
+                    <p>
+                        Cuando la videoconsulta sea cancelada por el paciente o usuario deberá realizarlo con 24 horas de anterioridad a la fecha agendada y  podrá ser reasignada sin costo en un tiempo no mayor a 30 días a través de la plataforma, de presentar dificultades para realizarlo el paciente y/o usuario podrá realizar la   solicitud en el siguiente correo  soporte@Ubimed.com.co, de no presentarse en los tiempos estipulados, se dará por efectuada la videoconsulta y no se realizaran reembolsos ni devoluciones.
+                    </p>
+                    <p>
+                        Cuando la video consulta sea cancelada por el proveedor de servicios de salud, tendrá 48 h para reasignar esta citas en la plataforma, si presenta alguna dificultad puede contactarse a  través del correo soporte@Ubimed.com.co, de no hacerlo se le dará la opción al paciente y/o usuario de que toma la videollamada con otro proveedor de servicios de salud, de no ser viable esta opción para el paciente y / o usuario se realizara la devolución  del valor total  de la transacción realizada en la plataforma y el proveedor de los servicios de salud  asumirá la devolución de la consulta no realizada, más el costo  financiero en el que tenga que incurrir Ubimed SAS en la devolución.  
+                    </p>
+                    <h3>
+                        Firma electrónica
+                    </h3>
+                    <p>Al aceptar los términos y condiciones de la plataforma de Ubimed SAS, el usuario acepta la implementación de firma electrónica para los efectos de aceptación del consentimiento informado, Política de privacidad, historia clínica y demás documentos derivados de la videoconsulta que requieran la aceptación, dando cumplimiento a la Resolución 2654 de 2019 artículo 7 de la república de Colombia.</p>
+                    <h3>Jurisdicción</h3>
+                    <p>La plataforma producida por Ubimed SAS está legalmente constituida en la República de Colombia, razón por la cual usted está de acuerdo que cualquier disputa será sometida a los jueces de la República de Colombia para que se resuelva cualquier acción o procedimiento que provenga o tenga conexión con la plataforma.</p>
+                    <h3> Acerca de la Política de Privacidad</h3>
+                    <p>Ubimed SAS como responsable de la calidad del tratamiento de datos personales en virtud de lo consagrado en la Ley 1581 del 2012 y demás normas, circulares y guías que regulen en materia de protección de datos personales, informa que los datos personales que usted suministre en esta plataforma para desarrollar las actividades de videoconsulta, serán tratados de acuerdo con la Política de Protección de Datos Personales de la Republica de Colombia.</p>
+                    <p>Así mismo manifiesto que me han sido explicados los derechos que me asisten como titular de los datos personales, en especial los relacionados con conocer, actualizar y rectificar los datos personales, solicitar prueba de la autorización otorgada para su tratamiento, ser informado, previa solicitud, del uso que se les ha dado a los datos, revocar la autorización y los demás derechos consagrados en el artículo 8 de la ley 1581 de 2012.</p>
+                    <p>Al aceptar los términos y condiciones manifiesta de manera voluntaria previa y explicita, a Ubimed SAS para el tratamiento de los datos registrados para desarrollar las actividades   de esta plataforma.</p>
+                  </div>
+              </div>
+              
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              </div>
+          </div>
+        </div>
+    </div>
+    <!--bootstrap-->
+    <%- include('../includes/jsbootstrap') %>
+        <!--JS-->
+        <script src="js/login/animate.js"></script>
+</body>
+
+</html>
